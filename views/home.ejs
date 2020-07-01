@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <link rel="stylesheet" href="/css/home.css">
+        <title><%= locals.title %></title>
+    </head>
+
+    <body>
+        <div id="header">
+            <h1><i class = "fas fa-tasks"></i>&ensp;<span>What&ensp;ToDo</span></h1>
+        </div>
+        
+        <form id="create-task" action="/create-task" method="POST">
+            <div id="description">
+                <h2>Description</h2>
+                <input type="text" name="description" placeholder="Enter Description" id="fill_desc">
+            </div>
+            
+            <div id="details">
+                <div>
+                    <h3>Category</h3>
+                    <select id="category" name="category">
+                        <option>Personal</option>
+                        <option>Work</option>
+                        <option>Sports</option>
+                        <option>Household</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Date</h3>
+                    <input type="date" id="date" name="date">
+                </div>
+            </div>
+            <button type="submit" class="form-button" id="add"><i class="fas fa-plus-square"></i>&ensp;Add Task</button>
+        </form>
+
+        <a href="/delete-all">
+            <button type="submit" class="form-button" id="delete"><i class="fas fa-trash"></i>&ensp;Delete All</button>
+        </a>
+
+        <div id="list">
+            <ul>
+                <% for(let i of tasks_list){ %>
+                <li>
+                 <div class="box"><i class="fas fa-angle-double-right"></i></div>
+                 <div id="content">
+                    <div id="info">
+                        <span id="desc"><%= i.description %> </span>
+                        <span id="dt"> 
+                            <i class = "fas fa-calendar-alt"></i>
+                            <% let day = i.date.getDate(); %>
+                            <% let month = i.date.getMonth()+1; %>
+                            <% let year = i.date.getFullYear(); %>
+                            <%= day.toString() + '/' + month.toString() + '/' + year.toString() %> 
+                        </span>
+                    </div>
+                    <button class="label" disabled> <%= i.category %></button>
+                 </div>
+                 <a id="del-task" href="delete/?id=<%= i._id %>"><i class="fas fa-window-close"></i></a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+
+        <script src="/js/home.js"></script>
+  
+    </body>
+</html>

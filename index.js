@@ -2,12 +2,18 @@ const express = require('express');
 const app = express();
 const port = 8000;
 
-// Use Express Router
-app.use('/', require('./routes/index'));
+// Get Data from Database
+const db = require('./config/mongoose');
+const tasks = require('./models/tasks');
+app.use(express.urlencoded()); 
 
-// Set up the viw engine
+// Set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+app.use(express.static('static'));
+
+// Use Express Router
+app.use('/', require('./routes/index'));
 
 app.listen(port, function(err){
     if(err){
